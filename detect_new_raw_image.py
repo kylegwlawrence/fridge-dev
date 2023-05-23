@@ -23,6 +23,6 @@ def compare_file_names(raw_directory:str='images/raw', processed_directory:str='
 	#else:
 	#	directory_a_names_not_in_b = set()
 	#	return directory_a_names_not_in_b
-	# debugging	
-	
+	# debugging
+
 compare_file_names()
