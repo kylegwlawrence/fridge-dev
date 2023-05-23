@@ -14,5 +14,3 @@ def transform_image(filename:str) -> None:
     cv2.imwrite('images/processed/'+new_filename, resized, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
     # possibly use cvtColor to transform from one color space to another instead of using IMREAD_GRAYSCALE
     return None
-
-transform_image('Fridge_2.jpg')

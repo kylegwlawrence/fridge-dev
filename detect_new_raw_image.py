@@ -20,5 +20,3 @@ def compare_file_names(directory_a:str, directory_b:str) -> set:
 		directory_a_names_not_in_b = directory_a_names.difference(directory_b_names)
 		print(directory_a_names_not_in_b)
 		return directory_a_names_not_in_b
-
-compare_file_names('images/raw','images/processed')
