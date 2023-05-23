@@ -20,3 +20,6 @@ def send_processed_image(image_name:str, channel_id:str) -> None:
     		logger.info(result)
 	except SlackApiError as e:
     		logger.error("Error uploading file: {}".format(e))
+
+def send_message(text:str, channel_id:str) -> None:
+    """Send a message with custom text to slack channel"""
