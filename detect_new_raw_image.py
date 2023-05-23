@@ -16,7 +16,7 @@ def compare_file_names(raw_directory:str='images/raw', processed_directory:str='
 	raw_names = get_file_names(raw_directory)
 	processed_names = get_file_names(processed_directory)
 	#compare two sets to see if equal.
-	raw_images_not_processed = raw_directory.difference(processed_directory)
+	raw_images_not_processed = raw_names.difference(processed_names)
 	print(raw_images_not_processed)
 	#if len(raw_images_not_processed)!=0:
 	return raw_images_not_processed
