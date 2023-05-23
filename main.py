@@ -10,7 +10,6 @@ new_raw_images=compare_file_names()
 if len(new_raw_images)!=0:
 	for image_name in new_raw_images:
 		transform_raw_image(image_name)
-		time.sleep(3) # wait for system to write processed file
 		send_processed_image(image_name)
 else:
 	print('No new images to send')
