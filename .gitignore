@@ -1,2 +1,3 @@
 images/
 fridge-venv/
+__pycache__/
