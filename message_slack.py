@@ -12,7 +12,7 @@ def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 	try:
     		# call method to upload files to channel
     		result = client.files_upload_v2(
-        		channels=channel_id,
+        		channel=channel_id,
         		initial_comment="Processed photo available for {}".format(image_name),
         		file=image_path,
                 request_file_info=False
