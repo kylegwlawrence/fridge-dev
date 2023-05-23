@@ -1,13 +1,13 @@
 import os
 
 def get_file_names(directory:str) -> set:
-	"""Loop over files in the directory and return a set of file names. Ignores sub-directories"""
-	files=[]
+	"""Loop over files in the directory and return a set of file names. Ignores sub-directories. Returns name WITHOUT extension"""
+	image_names=[]
 	for entry in os.scandir(directory):
 		if entry.is_file():
-			file_name=entry.name
-			files.append(file_name)
-	return set(files)
+			image_name=entry.name
+			image_names.append(image_name)
+	return set(image_names)
 
 def compare_file_names(directory_a:str, directory_b:str) -> set:
 	"""Compares two sets of file names from two different directories (a and b) and returns a set of missing file names with extensions.

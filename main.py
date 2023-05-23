@@ -6,6 +6,6 @@ from message_slack import send_processed_image
 new_raw_images=list(compare_file_names('images/raw','images/processed'))
 
 # transform image
-for image in new_raw_images:
-	processed_file_name = transform_image(image)
-	send_processed_image(processed_file_name, channel_id="C058V9D6PE0")
+for image_name in new_raw_images:
+	transform_image(image_name)
+	send_processed_image(image_name, channel_id="C058V9D6PE0")
