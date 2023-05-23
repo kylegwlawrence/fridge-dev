@@ -4,13 +4,13 @@ from message_slack import send_processed_image
 import time
 
 # determine if new images exist in raw. Returns set of raw images not processed if any. 
-new_raw_images=list(compare_file_names('images/raw','images/processed'))
+new_raw_images=compare_file_names()
 
 # transform image if exists
-if new_raw_images!=None:
+if len(new_raw_images)!=0:
 	for image_name in new_raw_images:
 		transform_raw_image(image_name)
 		time.sleep(3) # wait for system to write processed file
-		send_processed_image(image_name, channel_id="C058V9D6PE0")
+		send_processed_image(image_name)
 else:
 	print('No new images to send')
