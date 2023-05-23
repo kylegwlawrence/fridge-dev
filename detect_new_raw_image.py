@@ -16,4 +16,10 @@ def compare_file_names(directory_a:str, directory_b:str) -> set:
 	directory_b_names = get_file_names(directory_b)
 	#compare two sets to see if equal.
 	directory_a_names_not_in_b = directory_a_names.difference(directory_b_names)
-	return directory_a_names_not_in_b
+	if len(directory_a_names_not_in_b)!=0:
+		return directory_a_names_not_in_b
+	else:
+		directory_a_names_not_in_b = None
+		return directory_a_names_not_in_b
+	# debugging	
+	print(directory_a_names_not_in_b)
