@@ -1,3 +1,4 @@
 images/
 fridge-venv/
 __pycache__/
+start_slack_with_bolt.py
