@@ -2,7 +2,8 @@ import os
 import sys
 
 def get_file_names(directory:str) -> set:
-	"""Loop over files in the directory and return a set of file names. Ignores sub-directories. Returns name with extension"""
+	"""Loop over files in the directory and return a set of file names. Ignores sub-directories.
+	Returns a set of image names with extension"""
 	image_names=[]
 	for entry in os.scandir(directory):
 		if entry.is_file():
@@ -11,18 +12,12 @@ def get_file_names(directory:str) -> set:
 	return set(image_names)
 
 def compare_file_names(raw_directory:str='images/raw', processed_directory:str='images/processed') -> list:
-	"""Compares two sets of file names from two different directories (a and b) and returns a set of missing file names with extensions.
-	If there are no missing file names, returns a set of int 0"""
+	"""Get a set of raw imagenames and a set of processed image names, compare the sets, and return 
+	a list of raw image names that have not been processed. If all raw images have a match in the 
+	processed images folder, return an empty set."""
 	raw_names = get_file_names(raw_directory)
 	processed_names = get_file_names(processed_directory)
-	#compare two sets to see if equal.
+	# compare equality between the two sets
 	raw_images_not_processed = raw_names.difference(processed_names)
 	print(list(raw_images_not_processed))
-	#if len(raw_images_not_processed)!=0:
 	return list(raw_images_not_processed)
-	#else:
-	#	directory_a_names_not_in_b = set()
-	#	return directory_a_names_not_in_b
-	# debugging
-
-compare_file_names()

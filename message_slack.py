@@ -4,11 +4,11 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
-	"""Send a file to a Slack channel using file_name.type and not including the path"""
-	# instantiate the webclient use a bot token
+	"""Take a processed image name and upload it to a given channel_id in your Slack workspace."""
+    logger = logging.getLogger(__name__)
 	image_path = 'images/processed/{}'.format(image_name)
+    # instantiate the webclient use a bot token
 	client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
-	logger = logging.getLogger(__name__)
 	try:
     		# call method to upload files to channel
     		result = client.files_upload_v2(
@@ -17,7 +17,6 @@ def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
         		file=image_path,
                 request_file_info=False
     		)
-    		# Log the result
     		logger.info(result)
 	except SlackApiError as e:
     		logger.error("Error uploading file: {}".format(e))

@@ -3,10 +3,10 @@ from transform_image import transform_raw_image
 from message_slack import send_processed_image
 import time
 
-# determine if new images exist in raw. Returns set of raw images not processed if any. 
+# get a list of new images in raw that have not been processed. 
 new_raw_images=compare_file_names()
 
-# transform image if exists
+# transform image(s) and send the image to Slack.
 if len(new_raw_images)!=0:
 	for image_name in new_raw_images:
 		transform_raw_image(image_name)
