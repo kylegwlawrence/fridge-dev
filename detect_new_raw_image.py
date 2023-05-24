@@ -2,7 +2,7 @@ import os
 import sys
 
 def get_file_names(directory:str) -> set:
-	"""Loop over files in the directory and return a set of file names. Ignores sub-directories. Returns name WITHOUT extension"""
+	"""Loop over files in the directory and return a set of file names. Ignores sub-directories. Returns name with extension"""
 	image_names=[]
 	for entry in os.scandir(directory):
 		if entry.is_file():
