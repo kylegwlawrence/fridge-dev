@@ -1,0 +1,40 @@
+###
+### A complete description of a Prefect Deployment for flow 'Raw images: find, process, and notify'
+###
+name: prefect_flow
+description: null
+version: d80951980cece447975b9964123cd509
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: 'Raw images: find, process, and notify'
+manifest_path: null
+storage: null
+path: /Users/kylelawrence/Documents/fridge-dev
+entrypoint: main.py:main
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties: {}
+  required: null
+  definitions: null
+timestamp: '2023-05-25T00:46:05.883897+00:00'

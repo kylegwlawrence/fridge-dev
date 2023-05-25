@@ -54,8 +54,8 @@ def main():
 	# transform image(s) and send the image to Slack.
 	if len(new_raw_images)!=0:
 		for image_name in new_raw_images:
-			transform_raw_image(image_name)
-			send_processed_image(image_name)
+			transform_raw_image(image_name, wait_for=[compare_file_names])
+			send_processed_image(image_name, wait_for=[transform_raw_image])
 	else:
 		print('No new images to send')
 
