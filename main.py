@@ -6,7 +6,7 @@ import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-@task(name='Get list of raw images not processed')
+@task(name='Determine unprocessed raw images')
 def compare_file_names(raw_directory:str='images/raw', processed_directory:str='images/processed') -> list:
 	"""Get a set of raw imagenames and a set of processed image names, compare the sets, and return a list of raw image names that have not been processed. If all raw images have a match in the processed images folder, return an empty set."""
 	raw_names = get_file_names(raw_directory)
@@ -25,7 +25,7 @@ def transform_raw_image(image_name:str, width=150, height=150 ) -> None:
     cv2.imwrite('images/processed/'+image_name, resized, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
     return None
 
-@task(name='Send processed photos to Slack')
+@task(name='Send processed images to Slack')
 def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 	"""Take a processed image name and upload it to a given channel_id in your Slack workspace."""
 	logger = logging.getLogger(__name__)
@@ -47,7 +47,7 @@ def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 	except SlackApiError as e:
 		logger.error("Error uploading file: {}".format(e))
 
-@flow(name='Determine what raw images have not been processed, process them and upload them to Slack', log_prints=True)
+@flow(name='Raw images: find, process, and notify', log_prints=True)
 def main():
 	# get a list of new images in raw that have not been processed. 
 	new_raw_images=compare_file_names()
