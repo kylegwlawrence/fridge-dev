@@ -55,7 +55,11 @@ def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 		logger.error("Error uploading file: {}".format(e))
 		# send failure message to slack channel
 		try:
-			print("message slack channel with error here")
+			result = client.chat_postMessage(
+    			channel=channel_id,
+				text="File upload to Slack failed."
+			)
+			logger.info(result)
 		except SlackApiError as e:
 			logger.error("Error sending failure message: {}".format(e))
 
