@@ -1,10 +1,19 @@
-from detect_new_raw_image import get_file_names
 from prefect import flow, task
 import cv2
 import logging
 import os
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+
+def get_file_names(directory:str) -> set:
+	"""Loop over files in the directory and return a set of file names. Ignores sub-directories.
+	Returns a set of image names with extension"""
+	image_names=[]
+	for entry in os.scandir(directory):
+		if entry.is_file():
+			image_name=entry.name
+			image_names.append(image_name)
+	return set(image_names)
 
 @task(name='Determine unprocessed raw images')
 def compare_file_names(raw_directory:str='images/raw', processed_directory:str='images/processed') -> list:
@@ -13,7 +22,6 @@ def compare_file_names(raw_directory:str='images/raw', processed_directory:str='
 	processed_names = get_file_names(processed_directory)
 	# compare equality between the two sets
 	raw_images_not_processed = raw_names.difference(processed_names)
-	print(list(raw_images_not_processed))
 	return list(raw_images_not_processed)
 
 @task(name='Process raw images')
@@ -23,14 +31,13 @@ def transform_raw_image(image_name:str, width=150, height=150 ) -> None:
     img = cv2.imread('images/raw/'+image_name, cv2.IMREAD_GRAYSCALE)
     resized = cv2.resize(img, (width, height), interpolation = cv2.INTER_AREA)
     cv2.imwrite('images/processed/'+image_name, resized, [int(cv2.IMWRITE_JPEG_QUALITY), 95])
-    return None
 
 @task(name='Send processed images to Slack')
 def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 	"""Take a processed image name and upload it to a given channel_id in your Slack workspace."""
 	logger = logging.getLogger(__name__)
 	image_path = 'images/processed/{}'.format(image_name)
-    # instantiate the webclient use a bot token
+    # instantiate the webclient with a bot token
 	try:
 		client = WebClient(token=os.environ.get("SLACK_BOT_TOKEN"))
 	except SlackApiError as e:
@@ -46,6 +53,11 @@ def send_processed_image(image_name:str, channel_id:str="C058V9D6PE0") -> None:
 		logger.info(result)
 	except SlackApiError as e:
 		logger.error("Error uploading file: {}".format(e))
+		# send failure message to slack channel
+		try:
+			print("message slack channel with error here")
+		except SlackApiError as e:
+			logger.error("Error sending failure message: {}".format(e))
 
 @flow(name='Raw images: find, process, and notify', log_prints=True)
 def main():
