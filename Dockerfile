@@ -1,0 +1,1 @@
+FROM prefecthq/prefect:2.10.10-python3.10
